@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 
-const links = [
+const links: { label: string; href: string; external?: boolean }[] = [
   { label: "About", href: "#about" },
   { label: "How I Work", href: "#how-i-work" },
   { label: "Services", href: "#services" },
