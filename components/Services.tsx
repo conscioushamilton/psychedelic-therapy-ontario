@@ -4,7 +4,7 @@ const services = [
     color: "text-lavender",
     border: "border-lavender/20",
     title: "Individual Harm Reduction",
-    substances: "Psilocybin · MDMA",
+    substances: "Psilocybin · MDMA · 5-MeO-DMT · Ketamine",
     description:
       "A complete 11-hour support package tailored to your intention. Whether exploring healing, growth, or spiritual deepening — you will not be alone.",
     details: [

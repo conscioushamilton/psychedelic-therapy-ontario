@@ -7,6 +7,7 @@ const links = [
   { label: "Services", href: "#services" },
   { label: "Approach", href: "#approach" },
   { label: "Contact", href: "#contact" },
+  { label: "Resources", href: "/resources" },
 ];
 
 export default function Nav() {
@@ -37,6 +38,7 @@ export default function Nav() {
             <li key={l.href}>
               <a
                 href={l.href}
+                {...(l.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 className="font-body text-sm text-mist hover:text-star transition-colors tracking-wide"
               >
                 {l.label}
@@ -73,6 +75,7 @@ export default function Nav() {
               key={l.href}
               href={l.href}
               onClick={() => setOpen(false)}
+              {...(l.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
               className="text-mist hover:text-star text-sm tracking-wide transition-colors"
             >
               {l.label}
