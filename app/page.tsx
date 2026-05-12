@@ -7,6 +7,7 @@ import Approach from "@/components/Approach";
 import Journey from "@/components/Journey";
 import Location from "@/components/Location";
 import Contact from "@/components/Contact";
+import Newsletter from "@/components/Newsletter";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -22,6 +23,7 @@ export default function Home() {
         <Journey />
         <Location />
         <Contact />
+        <Newsletter />
       </main>
       <Footer />
     </>
