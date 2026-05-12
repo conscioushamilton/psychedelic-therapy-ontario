@@ -28,7 +28,7 @@ export default function Nav() {
     >
       <nav className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
-        <a href="#hero" className="font-display text-xl font-medium tracking-wide text-star hover:text-gold transition-colors">
+        <a href="/" className="font-display text-xl font-medium tracking-wide text-star hover:text-gold transition-colors">
           Psychedelic Therapy <span className="text-gold">Ontario</span>
         </a>
 
