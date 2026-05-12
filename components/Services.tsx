@@ -10,7 +10,7 @@ const services = [
     details: [
       "1 hr screening & intake",
       "2 hr preparation session",
-      "6 hr medicine journey",
+      "6 hr medicine journey (2 hr for 5-MeO-DMT)",
       "2 hr integration session",
     ],
   },
@@ -86,14 +86,6 @@ export default function Services() {
           ))}
         </div>
 
-        <div className="mt-10 text-center">
-          <p className="font-body text-mist/60 text-sm">
-            Pricing details available upon consultation.{" "}
-            <a href="#contact" className="text-gold hover:text-gold-light transition-colors underline underline-offset-4">
-              Book your free 15-minute call →
-            </a>
-          </p>
-        </div>
       </div>
     </section>
   );
