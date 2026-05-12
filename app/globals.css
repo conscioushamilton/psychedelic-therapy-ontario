@@ -1,26 +1,222 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-void: #080616;
+  --color-cosmos: #0D0B1E;
+  --color-nebula: #1A1040;
+  --color-deep-purple: #2D1B69;
+  --color-gold: #D4AF5A;
+  --color-gold-light: #F0D080;
+  --color-teal: #4DD9E4;
+  --color-teal-light: #7FECF5;
+  --color-rose: #E879A0;
+  --color-lavender: #C4A8FF;
+  --color-lavender-dark: #9B72FF;
+  --color-star: #EDE8FF;
+  --color-mist: #B8B0D8;
+
+  --font-display: var(--font-cormorant);
+  --font-body: var(--font-inter);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── Base ── */
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-void);
+  color: var(--color-star);
+  font-family: var(--font-inter), sans-serif;
+}
+
+/* ── Typography helpers ── */
+.font-display {
+  font-family: var(--font-cormorant), Georgia, serif;
+}
+
+/* ── Gradient backgrounds ── */
+.bg-cosmic {
+  background: radial-gradient(ellipse at 20% 30%, #2D1B69 0%, #0D0B1E 45%, #080616 100%);
+}
+
+.bg-cosmic-alt {
+  background: radial-gradient(ellipse at 80% 20%, #1A1040 0%, #080616 60%);
+}
+
+.bg-nebula-section {
+  background: linear-gradient(135deg, #0D0B1E 0%, #1A1040 50%, #0D0B1E 100%);
+}
+
+/* ── Glass cards ── */
+.glass {
+  background: rgba(45, 27, 105, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(196, 168, 255, 0.15);
+  border-radius: 1rem;
+}
+
+.glass-gold {
+  background: rgba(212, 175, 90, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(212, 175, 90, 0.25);
+  border-radius: 1rem;
+}
+
+/* ── Glow effects ── */
+.glow-gold {
+  text-shadow: 0 0 20px rgba(212, 175, 90, 0.6), 0 0 60px rgba(212, 175, 90, 0.2);
+}
+
+.glow-lavender {
+  text-shadow: 0 0 20px rgba(196, 168, 255, 0.5), 0 0 50px rgba(155, 114, 255, 0.2);
+}
+
+.glow-teal {
+  text-shadow: 0 0 20px rgba(77, 217, 228, 0.6), 0 0 50px rgba(77, 217, 228, 0.2);
+}
+
+.btn-glow {
+  box-shadow: 0 0 20px rgba(212, 175, 90, 0.4), 0 0 60px rgba(212, 175, 90, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.btn-glow:hover {
+  box-shadow: 0 0 30px rgba(212, 175, 90, 0.7), 0 0 80px rgba(212, 175, 90, 0.25);
+  transform: translateY(-1px);
+}
+
+.btn-teal-glow {
+  box-shadow: 0 0 20px rgba(77, 217, 228, 0.3);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.btn-teal-glow:hover {
+  box-shadow: 0 0 30px rgba(77, 217, 228, 0.6);
+  transform: translateY(-1px);
+}
+
+/* ── Orb / particle decoration ── */
+.orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(80px);
+  pointer-events: none;
+  opacity: 0.25;
+  animation: float-orb 10s ease-in-out infinite;
+}
+
+.orb-purple {
+  background: #9B72FF;
+  animation-delay: 0s;
+}
+
+.orb-teal {
+  background: #4DD9E4;
+  animation-delay: -4s;
+}
+
+.orb-rose {
+  background: #E879A0;
+  animation-delay: -7s;
+}
+
+.orb-gold {
+  background: #D4AF5A;
+  animation-delay: -2s;
+}
+
+/* ── Star field ── */
+.stars {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: #fff;
+  animation: twinkle var(--dur, 3s) ease-in-out infinite var(--delay, 0s);
+}
+
+/* ── Divider ── */
+.divider-gold {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 90, 0.5), transparent);
+}
+
+/* ── Animations ── */
+@keyframes float-orb {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(20px, -30px) scale(1.05); }
+  66% { transform: translate(-15px, 20px) scale(0.97); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.1; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.4); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* ── Gradient text ── */
+.gradient-text-gold {
+  background: linear-gradient(135deg, #D4AF5A 0%, #F0D080 50%, #D4AF5A 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s ease infinite;
+}
+
+.gradient-text-mystical {
+  background: linear-gradient(135deg, #C4A8FF 0%, #7FECF5 50%, #E879A0 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 6s ease infinite;
+}
+
+/* ── Animate in ── */
+.animate-fade-up {
+  animation: fade-up 0.8s ease forwards;
+}
+
+.delay-100 { animation-delay: 0.1s; opacity: 0; }
+.delay-200 { animation-delay: 0.2s; opacity: 0; }
+.delay-300 { animation-delay: 0.3s; opacity: 0; }
+.delay-400 { animation-delay: 0.4s; opacity: 0; }
+.delay-500 { animation-delay: 0.5s; opacity: 0; }
+.delay-700 { animation-delay: 0.7s; opacity: 0; }
+
+/* ── Nav ── */
+.nav-blur {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(8, 6, 22, 0.8);
+  border-bottom: 1px solid rgba(196, 168, 255, 0.1);
+}
+
+/* ── Section label ── */
+.section-label {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-gold);
 }
