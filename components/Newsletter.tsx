@@ -57,7 +57,7 @@ export default function Newsletter() {
 
         {status === "success" ? (
           <div className="glass p-8 border border-teal/20 font-body text-teal">
-            Thank you — check your inbox to confirm your subscription.
+            You&apos;re subscribed! We&apos;ll be in touch when events are announced.
           </div>
         ) : (
           <form
