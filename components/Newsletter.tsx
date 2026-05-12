@@ -1,11 +1,44 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
-const MAILCHIMP_ACTION =
-  "https://gmail.us2.list-manage.com/subscribe/post?u=e4ca010608b1fadac4152556d&id=ea6aa641a6&f_id=00ca4ce0f0";
+const MC_BASE =
+  "https://gmail.us2.list-manage.com/subscribe/post-json?u=e4ca010608b1fadac4152556d&id=ea6aa641a6&f_id=00ca4ce0f0";
 
 export default function Newsletter() {
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus("loading");
+
+    const data = new FormData(e.currentTarget);
+    const params = new URLSearchParams();
+    data.forEach((val, key) => params.append(key, val as string));
+
+    const callbackName = `mc_cb_${Date.now()}`;
+    const url = `${MC_BASE}&${params.toString()}&c=${callbackName}`;
+
+    (window as Record<string, unknown>)[callbackName] = (res: { result: string; msg: string }) => {
+      delete (window as Record<string, unknown>)[callbackName];
+      if (res.result === "success") {
+        setStatus("success");
+        formRef.current?.reset();
+      } else {
+        setStatus("error");
+        setErrorMsg(res.msg.replace(/^\d+ - /, ""));
+      }
+    };
+
+    const script = document.createElement("script");
+    script.src = url;
+    script.onerror = () => {
+      setStatus("error");
+      setErrorMsg("Something went wrong. Please try again.");
+    };
+    document.head.appendChild(script);
+  };
 
   return (
     <section id="newsletter" className="relative py-24 px-6 bg-cosmic-alt overflow-hidden">
@@ -22,16 +55,14 @@ export default function Newsletter() {
           integration circles, and events in the Hamilton area.
         </p>
 
-        {submitted ? (
-          <div className="glass p-8 border border-teal/20 text-teal font-body">
+        {status === "success" ? (
+          <div className="glass p-8 border border-teal/20 font-body text-teal">
             Thank you — check your inbox to confirm your subscription.
           </div>
         ) : (
           <form
-            action={MAILCHIMP_ACTION}
-            method="post"
-            target="_blank"
-            onSubmit={() => setSubmitted(true)}
+            ref={formRef}
+            onSubmit={handleSubmit}
             className="glass p-8 border border-lavender/20 space-y-4 text-left"
           >
             <div className="grid sm:grid-cols-2 gap-4">
@@ -85,11 +116,16 @@ export default function Newsletter() {
               />
             </div>
 
+            {status === "error" && (
+              <p className="font-body text-sm text-rose" dangerouslySetInnerHTML={{ __html: errorMsg }} />
+            )}
+
             <button
               type="submit"
-              className="w-full mt-2 px-8 py-3 rounded-full bg-gold/10 border border-gold/40 text-gold text-sm font-medium hover:bg-gold/20 transition-all btn-glow"
+              disabled={status === "loading"}
+              className="w-full mt-2 px-8 py-3 rounded-full bg-gold/10 border border-gold/40 text-gold text-sm font-medium hover:bg-gold/20 transition-all btn-glow disabled:opacity-50"
             >
-              Subscribe
+              {status === "loading" ? "Subscribing…" : "Subscribe"}
             </button>
           </form>
         )}
